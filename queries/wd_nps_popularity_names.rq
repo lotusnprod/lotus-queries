@@ -1,0 +1,24 @@
+#+ summary: Natural products popularity by names
+#+ description: Which are the most popular natural products based on the number of items named after them?
+#+ endpoint: https://query.wikidata.org/bigdata/namespace/wdq/sparql
+#+ pagination: 100
+#+ method: GET
+#+ tags:
+#+   - Natural products
+
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX wikibase: <http://wikiba.se/ontology#>
+PREFIX p: <http://www.wikidata.org/prop/>
+PREFIX bd: <http://www.bigdata.com/rdf#>
+#title: Which are the most popular natural products based on the number of items named after them?
+SELECT DISTINCT ?np ?npLabel (COUNT(DISTINCT ?item) AS ?count) WHERE {
+    ?item wdt:P138 ?np.
+    ?np p:P703 [];
+    wdt:P2067 ?mass;
+    wdt:P274 ?formula.
+    FILTER (?mass > 100)         # Removes compounds such as water, ethanol, etc.
+    FILTER(STRLEN(?formula) > 2) # Removes pure substances
+    SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
+}
+GROUP BY ?np ?npLabel
+ORDER BY DESC (?count)

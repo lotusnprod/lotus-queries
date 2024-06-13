@@ -1,0 +1,19 @@
+#+ summary: Taxa containing NPs
+#+ description: Which organisms are known to contain Beta-Sitosterol (Q121802)?
+#+ endpoint: https://query.wikidata.org/bigdata/namespace/wdq/sparql
+#+ pagination: 100
+#+ method: GET
+#+ tags:
+#+   - Taxa
+
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+#title: Which organisms are known to contain Beta-Sitosterol (Q121802)?
+SELECT DISTINCT ?taxon ?taxon_name WHERE {
+    VALUES ?compound {
+        wd:Q121802                     # You can remove the Qxxxxxx and hit Ctrl+space, type the first letters and it should autocomplete
+    }
+    ?compound wdt:P703 ?taxon.         # Found in taxon
+    ?taxon wdt:P225 ?taxon_name.       # Get scientific name of the taxon
+}
+LIMIT 10000

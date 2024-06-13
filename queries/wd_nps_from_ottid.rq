@@ -1,0 +1,24 @@
+#+ summary: Natural products from ott_id
+#+ description: What are the compounds found in (children) organisms corresponding to a given ott_id?
+#+ endpoint: https://query.wikidata.org/bigdata/namespace/wdq/sparql
+#+ pagination: 100
+#+ method: GET
+#+ tags:
+#+   - Natural products
+
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX wikibase: <http://wikiba.se/ontology#>
+PREFIX bd: <http://www.bigdata.com/rdf#>
+#title: What are the compounds found in (children) organisms corresponding to a given ott_id?
+SELECT DISTINCT ?structure ?structureLabel ?structure_inchikey ?childrenLabel WHERE {
+    VALUES ?ott_id {
+        "332362"
+        "1000758"
+    }
+    ?taxon wdt:P9157 ?ott_id.
+    ?children (wdt:P171*) ?taxon.
+    ?structure wdt:P235 ?structure_inchikey;
+    wdt:P703 ?children.
+    SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
+}
+LIMIT 10000
