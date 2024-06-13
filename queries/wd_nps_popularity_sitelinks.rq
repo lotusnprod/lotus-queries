@@ -1,0 +1,26 @@
+#+ summary: Natural products popularity by sitelinks
+#+ description: Which are the most popular natural products based on the number of sitelinks on their corresponding QID?
+#+ endpoint: https://query.wikidata.org/bigdata/namespace/wdq/sparql
+#+ pagination: 100
+#+ method: GET
+#+ tags:
+#+   - Natural products
+
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX wikibase: <http://wikiba.se/ontology#>
+PREFIX p: <http://www.wikidata.org/prop/>
+PREFIX hint: <http://www.bigdata.com/queryHints#>
+#title: Which are the most popular natural products based on the number of sitelinks on their corresponding QID?
+SELECT DISTINCT ?np ?sitelinks WHERE {
+    hint:Query hint:optimizer "None".
+    { SELECT DISTINCT ?sitelinks WHERE { [] wikibase:sitelinks ?sitelinks. } }
+    hint:Prior hint:runFirst FALSE.
+    FILTER(?sitelinks > 90 )
+    ?np wikibase:sitelinks ?sitelinks;
+    p:P703 [];
+    wdt:P2067 ?mass;
+    wdt:P274 ?formula.
+    FILTER(?mass > 100 )
+    FILTER((STRLEN(?formula)) > 2 )
+}
+ORDER BY DESC (?sitelinks)

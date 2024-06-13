@@ -1,0 +1,17 @@
+#+ summary: Maintenance found in taxa 2
+#+ description: Which are the available non-referenced structure-organism pairs on Wikidata? (limited to 10)
+#+ endpoint: https://query.wikidata.org/bigdata/namespace/wdq/sparql
+#+ pagination: 100
+#+ method: GET
+#+ tags:
+#+   - Maintenance
+
+PREFIX p: <http://www.wikidata.org/prop/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+#title: Which are the available non-referenced structure-organism pairs on Wikidata? (limited to 10)
+SELECT ?statement WHERE {
+    [ p:P235 [];
+    p:P703 ?statement; ]
+    MINUS { ?statement prov:wasDerivedFrom []. }
+}
+LIMIT 10

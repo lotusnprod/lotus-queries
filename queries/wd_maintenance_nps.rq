@@ -1,0 +1,28 @@
+#+ summary: Maintenance found in taxa
+#+ description: Which are the available referenced structure-organism pairs on Wikidata? (with P1582 and not P703 we are using)
+#+ endpoint: https://query.wikidata.org/bigdata/namespace/wdq/sparql
+#+ pagination: 100
+#+ method: GET
+#+ tags:
+#+   - Maintenance
+
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX p: <http://www.wikidata.org/prop/>
+PREFIX ps: <http://www.wikidata.org/prop/statement/>
+PREFIX pr: <http://www.wikidata.org/prop/reference/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+#title: Which are the available referenced structure-organism pairs on Wikidata? (with P1582 and not P703 we are using)
+SELECT DISTINCT (REPLACE(STR(?item), ".*Q", "Q") AS ?qid) (REPLACE(STR(?taxon), ".*Q", "Q") AS ?P703) (REPLACE(STR(?art), ".*Q", "Q") AS ?S248) WHERE {
+    VALUES ?classes {
+        wd:Q113145171
+        wd:Q59199015
+    }
+    ?item wdt:P31 ?classes.
+    {
+        ?item p:P1582 ?stmt.
+        ?stmt ps:P1582 ?taxon;
+        prov:wasDerivedFrom/pr:P248 ?art.
+    }
+}
+LIMIT 1000

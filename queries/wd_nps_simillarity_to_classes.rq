@@ -1,0 +1,44 @@
+#+ summary: Natural products structurally similar to chemical classes
+#+ description: What are the parent taxa containing the most oleanane triterpenoids (Q108544891) similar to those reported in Quillaja saponaria (Q2382775)?
+#+ endpoint: https://query.wikidata.org/bigdata/namespace/wdq/sparql
+#+ pagination: 100
+#+ method: GET
+#+ tags:
+#+   - Natural products
+#+   - Chemical classes
+#+   - Structural similarity
+
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX hint: <http://www.bigdata.com/queryHints#>
+#title: What are the parent taxa containing the most oleanane triterpenoids (Q108544891) similar to those reported in Quillaja saponaria (Q2382775)?
+PREFIX sachem: <http://bioinfo.uochb.cas.cz/rdf/v1.0/sachem#>
+PREFIX idsm: <https://idsm.elixir-czech.cz/sparql/endpoint/>
+SELECT DISTINCT ?parent_taxon ?parent_taxon_name (COUNT(DISTINCT ?compound) AS ?count) WHERE {
+    SERVICE idsm:wikidata {
+        VALUES ?CUTOFF {
+            "0.9"^^xsd:double
+        }
+        SERVICE <https://query.wikidata.org/bigdata/namespace/wdq/sparql> {
+            VALUES ?taxon_1 {
+                wd:Q2382775
+            }
+            VALUES ?class {
+                wd:Q108544891
+            }
+            ?structure wdt:P233 ?structure_smiles;
+            wdt:P703/(wdt:P171*) ?taxon_1;
+            wdt:P279 ?structure_class.
+            FILTER(?structure_class = ?class)
+        }
+        ?compound sachem:similarCompoundSearch [
+        sachem:query ?structure_smiles;
+        sachem:cutoff ?CUTOFF
+        ].
+    } hint:Prior hint:runFirst TRUE.
+    ?compound wdt:P703/wdt:P171 ?parent_taxon.
+    ?parent_taxon wdt:P225 ?parent_taxon_name.
+}
+GROUP BY ?parent_taxon ?parent_taxon_name
+ORDER BY DESC (?count)

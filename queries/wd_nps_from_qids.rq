@@ -1,0 +1,28 @@
+#+ summary: Natural products from qids
+#+ description: What are the compounds found in Arabidopsis thaliana (Q158695) and Celastrus (Q811662) or children taxa?
+#+ endpoint: https://query.wikidata.org/bigdata/namespace/wdq/sparql
+#+ pagination: 100
+#+ method: GET
+#+ tags:
+#+   - Natural products
+
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX wikibase: <http://wikiba.se/ontology#>
+PREFIX bd: <http://www.bigdata.com/rdf#>
+PREFIX hint: <http://www.bigdata.com/queryHints#>
+#title: What are the compounds found in Arabidopsis thaliana (Q158695) and Celastrus (Q811662) or children taxa?
+SELECT DISTINCT ?structure ?structureLabel ?structure_inchikey ?childLabel WHERE {
+    {
+        SELECT ?child WHERE {
+            { ?child (wdt:P171*) wd:Q158695. }
+            UNION
+            { ?child (wdt:P171*) wd:Q811662. }
+        }
+    }
+    hint:Prior hint:runFirst TRUE.
+    ?structure wdt:P235 ?structure_inchikey;
+    wdt:P703 ?child.
+    SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
+}
+
