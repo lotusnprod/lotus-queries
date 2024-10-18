@@ -18,6 +18,6 @@ SELECT DISTINCT ?structure ?structureLabel ?structure_inchikey WHERE {
     ?children (wdt:P171*) ?taxon.              # Include children taxa
     ?structure wdt:P235 ?structure_inchikey;   # Get the InChIKey
     wdt:P703 ?children.                        # Found in given taxon/taxa
-    SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
+    SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],mul,en". }
 }
 LIMIT 10000

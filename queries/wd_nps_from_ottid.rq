@@ -19,6 +19,6 @@ SELECT DISTINCT ?structure ?structureLabel ?structure_inchikey ?childrenLabel WH
     ?children (wdt:P171*) ?taxon.
     ?structure wdt:P235 ?structure_inchikey;
     wdt:P703 ?children.
-    SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
+    SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],mul,en". }
 }
 LIMIT 10000

@@ -23,7 +23,7 @@ SELECT DISTINCT ?dish ?dishLabel (COUNT(DISTINCT ?ingredient) AS ?ingredients) (
                     (wdt:P527+) ?ingredient.
                     hint:Prior hint:gearing "forward".
                     SERVICE wikibase:label {
-                        bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en".
+                        bd:serviceParam wikibase:language "[AUTO_LANGUAGE],mul,en".
                         ?dish rdfs:label ?dishLabel.
                     }
                 }
