@@ -18,7 +18,7 @@ SELECT DISTINCT ?np ?npLabel (COUNT(DISTINCT ?item) AS ?count) WHERE {
     wdt:P274 ?formula.
     FILTER (?mass > 100)         # Removes compounds such as water, ethanol, etc.
     FILTER(STRLEN(?formula) > 2) # Removes pure substances
-    SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
+    SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],mul,en". }
 }
 GROUP BY ?np ?npLabel
 ORDER BY DESC (?count)

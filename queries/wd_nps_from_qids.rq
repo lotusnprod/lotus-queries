@@ -23,6 +23,6 @@ SELECT DISTINCT ?structure ?structureLabel ?structure_inchikey ?childLabel WHERE
     hint:Prior hint:runFirst TRUE.
     ?structure wdt:P235 ?structure_inchikey;
     wdt:P703 ?child.
-    SERVICE wikibase:label { bd:serviceParam wikibase:language "en". }
+    SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],mul,en". }
 }
 

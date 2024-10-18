@@ -28,7 +28,7 @@ SELECT ?authors_namesLabel (COUNT(DISTINCT(?compound)) AS ?count) WHERE {
     SERVICE wdsubgraph:scholarly_articles {
       ?art wdt:P50 ?authors_names.  # limit to references containing the author names
     }
-    SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+    SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],mul,en". }
 }
 GROUP BY ?authors_namesLabel
 ORDER BY DESC (?count)
