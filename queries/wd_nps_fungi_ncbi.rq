@@ -1,0 +1,31 @@
+#+ summary: Natural products from Fungi
+#+ description: Which natural products were isolated from Fungi (Q764), with an NCBI ID?
+#+ endpoint: https://query-main.wikidata.org/bigdata/namespace/wdq/sparql
+#+ pagination: 100
+#+ method: GET
+#+ tags:
+#+   - Natural products
+
+PREFIX p: <http://www.wikidata.org/prop/>
+PREFIX ps: <http://www.wikidata.org/prop/statement/>
+PREFIX pr: <http://www.wikidata.org/prop/reference/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX wdsubgraph: <https://query.wikidata.org/subgraph/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+#title: Which natural products were isolated from Fungi (Q764), with an NCBI ID?
+SELECT ?organism ?organism_name ?organism_ncbi ?compound ?compound_inchikey ?compound_smiles_canonical ?compound_smiles_isomeric ?reference ?reference_doi WHERE {
+  ?organism (wdt:P171*) wd:Q764;
+                        wdt:P685 ?organism_ncbi;
+                        wdt:P225 ?organism_name.
+  ?compound wdt:P235 ?compound_inchikey;
+            wdt:P233 ?compound_smiles_canonical;
+            p:P703 ?statement.
+  OPTIONAL { ?compound wdt:P2017 ?compound_smiles_isomeric. }
+  ?statement ps:P703 ?organism;
+             prov:wasDerivedFrom/pr:P248 ?reference.
+  SERVICE wdsubgraph:scholarly_articles {
+    ?reference wdt:P356 ?reference_doi.
+  }
+}
+LIMIT 300000
