@@ -1,5 +1,5 @@
-#+ summary: Species containing all compounds
-#+ description: Which taxa contain all of the following structures?
+#+ summary: Species containing compounds
+#+ description: Which species contain at least n of the following structures?
 #+ endpoint: https://query.wikidata.org/bigdata/namespace/wdq/sparql
 #+ pagination: 100
 #+ method: GET
