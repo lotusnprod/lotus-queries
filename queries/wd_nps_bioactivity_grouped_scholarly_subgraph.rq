@@ -27,7 +27,7 @@ SELECT ?organism ?organism_name ?compound ?compound_smiles (GROUP_CONCAT(DISTINC
     ?statement ps:P703 ?organism;
     prov:wasDerivedFrom ?ref.
     ?ref pr:P248 ?isolation_reference.
-    SERVICE wdsubgraph:scholarly_articles {
+    SERVICE <https://query-scholarly.wikidata.org/sparql> {
       ?isolation_reference wdt:P1476 ?reference_title;
       wdt:P577 ?reference_date.
     }
