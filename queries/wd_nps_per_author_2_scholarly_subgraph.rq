@@ -35,7 +35,7 @@ SELECT ?authorLabel ?nationalityLabel ?rgb (COUNT(DISTINCT ?compound) AS ?count)
         }
     }
     hint:Prior hint:runFirst TRUE.
-    SERVICE wdsubgraph:scholarly_articles {
+    SERVICE <https://query-scholarly.wikidata.org/sparql> {
       ?art wdt:P50 ?author.
     }
     ?author wdt:P21 ?gender;

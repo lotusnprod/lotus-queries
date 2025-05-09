@@ -24,7 +24,7 @@ SELECT ?organism ?organism_name ?organism_ncbi ?compound ?compound_inchikey ?com
   OPTIONAL { ?compound wdt:P2017 ?compound_smiles_isomeric. }
   ?statement ps:P703 ?organism;
              prov:wasDerivedFrom/pr:P248 ?reference.
-  SERVICE wdsubgraph:scholarly_articles {
+  SERVICE <https://query-scholarly.wikidata.org/sparql> {
     ?reference wdt:P356 ?reference_doi.
   }
 }
