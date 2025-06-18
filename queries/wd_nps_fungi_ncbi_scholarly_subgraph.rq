@@ -12,16 +12,17 @@ PREFIX pr: <http://www.wikidata.org/prop/reference/>
 PREFIX prov: <http://www.w3.org/ns/prov#>
 PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
-#title: Which natural products were isolated from Fungi (Q764), with an NCBI ID?
-SELECT ?organism ?organism_name ?organism_ncbi ?compound ?compound_inchikey ?compound_smiles_canonical ?compound_smiles_isomeric ?reference ?reference_doi WHERE {
-  ?organism (wdt:P171*) wd:Q764;
-                        wdt:P685 ?organism_ncbi;
-                        wdt:P225 ?organism_name.
-  ?compound wdt:P235 ?compound_inchikey;
+#title: Compounds found in Fungi (Q764), with an NCBI ID.
+SELECT ?taxon ?taxon_name ?taxon_ncbi ?compound ?compound_inchikey ?compound_smiles_canonical ?compound_smiles_isomeric ?reference ?reference_doi WHERE {
+  ?taxon (wdt:P171*) wd:Q764;
+                        wdt:P685 ?taxon_ncbi;
+                        wdt:P225 ?taxon_name.
+  ?compound wdt:P703 ?taxon;
+            wdt:P235 ?compound_inchikey;
             wdt:P233 ?compound_smiles_canonical;
             p:P703 ?statement.
   OPTIONAL { ?compound wdt:P2017 ?compound_smiles_isomeric. }
-  ?statement ps:P703 ?organism;
+  ?statement ps:P703 ?taxon;
              prov:wasDerivedFrom/pr:P248 ?reference.
   SERVICE <https://query-scholarly.wikidata.org/sparql> {
     ?reference wdt:P356 ?reference_doi.
